@@ -69,8 +69,6 @@
 	var shipping = '{{order.shipping}}'
 	var total = '{{order.get_cart_total|floatformat:2}}'
 
-	console.log(shipping)
-
 	if (shipping == 'False'){
 		document.getElementById('shipping-info').innerHTML = ''
 	}
@@ -110,7 +108,7 @@
 			'address':null,
 			'city':null,
 			'state':null,
-			'zhipcode':null
+			'zipcode':null
 		}
 
 		if (shipping != 'False'){
@@ -133,8 +131,8 @@
 				'X-CSRFToken': csrftoken,
 			},
 			body: JSON.stringify({
-				'form':userFormData,
-				'shipping':shippingInfo
+				'form': userFormData,
+				'shipping': shippingInfo
 				})
 			}
 		)
@@ -142,6 +140,9 @@
 		.then((data) => {
 			console.log('Success:', data)
 			alert('transaction completed')
+
+			cart = {}
+			document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
 			window.location.href = "{% url 'store' %}"
 		})
 	}
